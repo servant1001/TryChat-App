@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "273067513689",
+    "firebase_url": "https://trychat-cfcbe.firebaseio.com",
+    "project_id": "trychat-cfcbe",
+    "storage_bucket": "trychat-cfcbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273067513689:android:0d63dc40c68d38b7",
+        "android_client_info": {
+          "package_name": "com.example.user.trychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273067513689-i0c6nh5ik39h81qmgumrod0cbfn3m9eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.trychat",
+            "certificate_hash": "dff3fb030515c5b542eaeff870b60f3162507e49"
+          }
+        },
+        {
+          "client_id": "273067513689-vhr7jl5aqgc4cen0gvcjbja375kkq9nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaI7tyrLmMgpBHbNOsLMf6OWGs5EF_prM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273067513689-vhr7jl5aqgc4cen0gvcjbja375kkq9nb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
