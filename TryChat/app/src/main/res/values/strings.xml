@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TryChat</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="display_name">Display Name</string>
+    <string name="log_out">Log Out</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
