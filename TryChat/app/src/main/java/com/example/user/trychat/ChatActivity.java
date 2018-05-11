@@ -62,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
     //Part 31
     private SwipeRefreshLayout mRefreshLayout;
     private static final int TOTAL_ITEMS_TO_LOAD = 10;
-    private int mCurrentPage = 0;
+    private int mCurrentPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +102,7 @@ public class ChatActivity extends AppCompatActivity {
         mAdapter = new MessageAdapter(messagesList);
 
         mMessageList = findViewById(R.id.messages_list);
+        mRefreshLayout = findViewById(R.id.message_swipe_layout);//Part 31
         mLinearLayout = new LinearLayoutManager(this);
 
         mMessageList.setHasFixedSize(true);
@@ -178,15 +179,20 @@ public class ChatActivity extends AppCompatActivity {
         mChatSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                /*
-                Intent galleryIntent = new Intent();
-                galleryIntent.setType("image/*");
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-                startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
-*/
                 sendMessage();
+            }
+        });
+
+        //Part 31
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mCurrentPage++;
+
+                messagesList.clear();
+
+                loadMessage();
             }
         });
 
@@ -196,7 +202,7 @@ public class ChatActivity extends AppCompatActivity {
 
         DatabaseReference messageRef = mRootRef.child("message").child(mCurrentUserId).child(mChatUser);
 
-        Query messageQuery = messageRef.limitToLast(TOTAL_ITEMS_TO_LOAD);
+        Query messageQuery = messageRef.limitToLast(mCurrentPage * TOTAL_ITEMS_TO_LOAD);//一次加載10比對話
 
         messageQuery.addChildEventListener(new ChildEventListener() {
             @Override
@@ -207,7 +213,9 @@ public class ChatActivity extends AppCompatActivity {
                 messagesList.add(messages);
                 mAdapter.notifyDataSetChanged();
 
-                mMessageList.scrollToPosition(messagesList.size() -1);
+                mMessageList.scrollToPosition(messagesList.size() -1);//固定顯示最新訊息
+
+                mRefreshLayout.setRefreshing(false);//動畫結束
             }
 
             @Override
