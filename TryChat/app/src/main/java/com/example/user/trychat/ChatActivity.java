@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,8 +32,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +62,8 @@ public class ChatActivity extends AppCompatActivity {
 
     String chat_user_name;
 
+    //private FirebaseListAdapter<Messages> adapter;
+
     //Part 29
     private RecyclerView mMessageList;
     private final List<Messages> messagesList = new ArrayList<>();
@@ -78,6 +83,7 @@ public class ChatActivity extends AppCompatActivity {
     //Part 34 send image
     private static final int GALLERY_PICK = 1;
     private StorageReference mImageStorage; //Storage Firebase
+
 
 
     @Override
@@ -125,7 +131,11 @@ public class ChatActivity extends AppCompatActivity {
         mMessageList.setLayoutManager(mLinearLayout);
 
         mMessageList.setAdapter(mAdapter);
-        
+
+                //------- IMAGE STORAGE ---------
+        mImageStorage = FirebaseStorage.getInstance().getReference();
+        mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
+
         loadMessages();
 
         mRootRef.child("Users").child(mChatUser).addValueEventListener(new ValueEventListener() {
@@ -136,6 +146,8 @@ public class ChatActivity extends AppCompatActivity {
 
                 chat_user_name = dataSnapshot.child("name").getValue().toString();//資料庫抓name
                 mTitleView.setText(chat_user_name);//ActionBar顯示好友名字
+
+                Picasso.with(ChatActivity.this).load(image).placeholder(R.drawable.default_avatar).into(mProfileImage);
 
                 if (online.equals("true")){
 
@@ -202,7 +214,8 @@ public class ChatActivity extends AppCompatActivity {
         //Part 34 send image
         mChatAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 Intent galleryIntent = new Intent();
                 galleryIntent.setType("image/*");
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -234,10 +247,10 @@ public class ChatActivity extends AppCompatActivity {
 
             Uri imageUri = data.getData();
 
-            final String current_user_ref = "messages/" + mCurrentUserId + "/" + mChatUser;
-            final String chat_user_ref = "messages/" + mChatUser + "/" + mCurrentUserId;
+            final String current_user_ref = "message/" + mCurrentUserId + "/" + mChatUser;
+            final String chat_user_ref = "message/" + mChatUser + "/" + mCurrentUserId;
 
-            DatabaseReference user_message_push = mRootRef.child("messages")
+            DatabaseReference user_message_push = mRootRef.child("message")
                     .child(mCurrentUserId).child(mChatUser).push();
 
             final String push_id = user_message_push.getKey();

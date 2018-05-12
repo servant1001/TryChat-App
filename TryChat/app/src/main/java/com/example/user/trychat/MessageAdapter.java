@@ -65,6 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public CircleImageView profileImage;
         public TextView displayName;
         public ImageView  messageImage;
+        public TextView messageTime;
 
         public MessageViewHolder(View view) {
             super(view);
@@ -73,6 +74,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             profileImage = view.findViewById(R.id.message_profile_layout);
             displayName = view.findViewById(R.id.name_text_layout);
             messageImage = view.findViewById(R.id.message_image_layout);
+            messageTime = view.findViewById(R.id.time_text_layout);
         }
     }
 

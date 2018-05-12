@@ -5,6 +5,7 @@ public class Messages {//Part 29
     private String message, type;
     private long  time;
     private boolean seen;
+    private long messageTime;
 
     private String from;
 
@@ -61,5 +62,13 @@ public class Messages {//Part 29
 
     public Messages(){
 
+    }
+
+    public long getMessageTime() {
+        return messageTime;
+    }
+
+    public void setMessageTime(long messageTime) {
+        this.messageTime = messageTime;
     }
 }
