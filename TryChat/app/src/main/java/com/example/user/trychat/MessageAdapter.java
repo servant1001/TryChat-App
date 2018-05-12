@@ -119,7 +119,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             }
         });
 
-        if(message_type.equals("text")) {
+        if(message_type.equals("text")) {//判斷訊息是文字還是圖片
 
             viewHolder.messageText.setText(c.getMessage());
             viewHolder.messageImage.setVisibility(View.INVISIBLE);
