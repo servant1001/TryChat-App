@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout = (TabLayout)findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.getTabAt(0).setIcon(R.drawable.add_contact);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.chat);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.user);
+
     }
 
     @Override

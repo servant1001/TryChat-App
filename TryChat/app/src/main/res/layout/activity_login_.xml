@@ -38,71 +38,68 @@
             android:textColor="@android:color/background_dark"
             android:textSize="24sp" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/reg_displayname"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="70dp"
-            android:layout_marginLeft="20dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal"
+            android:paddingEnd="30dp"
+            android:paddingStart="50dp">
 
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="39dp">
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_centerInParent="true"
-            android:id="@+id/login_email"
-            android:layout_width="375dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="115dp">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="350dp"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_email"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Your Email"
-                android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+                android:gravity="center">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/login_password"
-            android:layout_width="375dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="195dp">
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Your Email"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="350dp"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="50dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
+                android:gravity="center">
 
-        <Button
-            android:id="@+id/login_btn"
-            android:layout_width="152dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="120dp"
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_marginTop="50dp"
-            android:background="@color/colorAccent"
-            android:text="Login"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="120dp"
-            tools:layout_editor_absoluteY="291dp" />
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/login_btn"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bt_shape"
+                android:stateListAnimator="@drawable/state_list_animator_z"
+                android:text="Login"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

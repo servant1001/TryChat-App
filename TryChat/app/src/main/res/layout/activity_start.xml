@@ -7,17 +7,23 @@
     android:background="@color/colorPrimary"
     tools:context=".StartActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="276dp"
-        android:text="Welcome to Try Chat"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:layout_marginTop="150dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Welcome to Try Chat"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/start_login_btn"
