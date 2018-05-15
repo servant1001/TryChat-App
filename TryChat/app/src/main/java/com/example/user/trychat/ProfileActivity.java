@@ -110,30 +110,23 @@ public class ProfileActivity extends AppCompatActivity {
 
                             String req_type = dataSnapshot.child(user_id).child("request_type").getValue().toString();
 
-                            if(req_type.equals("received")){
+                            if(req_type.equals("received")){//接收方
 
                                 mCurrent_state = "req_received";
                                 mProfileSendReqBtn.setText("Accept Friend Request");
-
-                                mDeclineBtn.setVisibility(View.VISIBLE);
+                                mDeclineBtn.setVisibility(View.VISIBLE);//顯示拒絕button
                                 mDeclineBtn.setEnabled(true);
 
-
-                            } else if(req_type.equals("sent")) {
+                            } else if(req_type.equals("sent")) {//送出方
 
                                 mCurrent_state = "req_sent";
-                                mProfileSendReqBtn.setText("Cancel Friend Request");
-
+                                mProfileSendReqBtn.setText("Cancel Friend Request");//取消邀請
                                 mDeclineBtn.setVisibility(View.INVISIBLE);
                                 mDeclineBtn.setEnabled(false);
-
                             }
-
                             mProgressbar_cycle.setVisibility(View.GONE);
 
-
                         } else {
-
 
                             mFriendDatabase.child(mCurrent_user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -166,8 +159,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                     }
                 });
-
-
             }
 
             @Override
@@ -184,9 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
                 mProfileSendReqBtn.setEnabled(false);//按過邀請後停用邀請按鈕
 
                 // ----------------------- NOT FRIENDS STATE -----------------------*可以在Database看到資料的變化 Part 17、18
-
                 if(mCurrent_state.equals("not_friends")){//後來有修改 Part25
-
 
                     DatabaseReference newNotificationref = mRootRef.child("notifications").child(user_id).push();
                     String newNotificationId = newNotificationref.getKey();
@@ -215,10 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 Toast.makeText(ProfileActivity.this, " Request Sent Successfully.", Toast.LENGTH_LONG).show();
                             }
-
                             mProfileSendReqBtn.setEnabled(true);
-
-
                         }
                     });
 
@@ -226,7 +212,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
                 // ----------------------- CANCEL REQUEST STATE -----------------------*可以在Database看到資料的變化 Part 18
-
                 if(mCurrent_state.equals("req_sent")){
 
                     mFriendReqDatabase.child(mCurrent_user.getUid()).child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -237,7 +222,6 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
-
                                     mProfileSendReqBtn.setEnabled(true);
                                     mCurrent_state = "not_friends";
                                     mProfileSendReqBtn.setText("Send Friend Request");
@@ -245,18 +229,14 @@ public class ProfileActivity extends AppCompatActivity {
                                     mDeclineBtn.setVisibility(View.INVISIBLE);
                                     mDeclineBtn.setEnabled(false);
 
-
                                 }
                             });
-
                         }
                     });
-
                 }
 
 
                 // ------------ REQ RECEIVED STATE ----------
-
                 if(mCurrent_state.equals("req_received")){
 
                     final String currentDate = DateFormat.getDateTimeInstance().format(new Date());
@@ -285,19 +265,13 @@ public class ProfileActivity extends AppCompatActivity {
                                 mDeclineBtn.setEnabled(false);
 
                             } else {
-
                                 String error = databaseError.getMessage();
 
                                 Toast.makeText(ProfileActivity.this, error, Toast.LENGTH_SHORT).show();
-
-
                             }
-
                         }
                     });
-
                 }
-
 
                 // ------------ UNFRIENDS ---------
 
@@ -325,20 +299,12 @@ public class ProfileActivity extends AppCompatActivity {
                                 String error = databaseError.getMessage();
 
                                 Toast.makeText(ProfileActivity.this, error, Toast.LENGTH_SHORT).show();
-
-
                             }
-
                             mProfileSendReqBtn.setEnabled(true);
-
                         }
                     });
-
                 }
-
             }
         });
-
     }
-
 }

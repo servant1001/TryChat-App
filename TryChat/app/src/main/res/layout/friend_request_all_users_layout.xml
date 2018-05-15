@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_single_image"
+        android:id="@+id/request_user_image"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginBottom="15dp"
@@ -14,7 +14,7 @@
         android:src="@drawable/default_avatar" />
 
     <TextView
-        android:id="@+id/user_single_status"
+        android:id="@+id/req_user_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -25,23 +25,31 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/user_single_name"
+        android:id="@+id/req_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/user_single_status"
+        android:layout_alignStart="@+id/req_user_status"
         android:layout_marginTop="18dp"
         android:text="Display Name"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
-    <ImageView
-        android:id="@+id/user_single_online_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:layout_width="65dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="22dp"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/presence_online" />
+        android:layout_alignTop="@+id/request_user_image"
+        android:layout_marginEnd="86dp"
+        android:text="Accept"
+        android:textSize="8dp" />
+
+    <Button
+        android:layout_width="65dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/request_user_image"
+        android:layout_marginEnd="12dp"
+        android:text="Cancel"
+        android:textSize="8dp" />
 
 </RelativeLayout>

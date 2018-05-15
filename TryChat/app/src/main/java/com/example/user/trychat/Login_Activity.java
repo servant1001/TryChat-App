@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -29,11 +32,11 @@ public class Login_Activity extends AppCompatActivity {
 
     private TextInputLayout mLoginEmail;
     private TextInputLayout mLoginPassword;
-
-    private Button mLogin_btn;
+    private EditText mEtPassword;
+    private Button mLogin_btn,mBtnPassword;
+    private boolean mbDisplayFlg = false;
 
     private FirebaseAuth mAuth;
-
     private DatabaseReference mUserDatabase;
 
     private ProgressBar mProgressbar_cycle;
@@ -57,6 +60,7 @@ public class Login_Activity extends AppCompatActivity {
 
         mLoginEmail = findViewById(R.id.login_email);
         mLoginPassword = findViewById(R.id.login_password);
+        mEtPassword = findViewById(R.id.et_login_password);
         mLogin_btn = findViewById(R.id.login_btn);
 
         mLogin_btn.setOnClickListener(new View.OnClickListener() {
@@ -64,12 +68,28 @@ public class Login_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 String email = mLoginEmail.getEditText().getText().toString();
-                String password = mLoginPassword.getEditText().getText().toString();
+                //String password = mLoginPassword.getEditText().getText().toString();
+                String password = mEtPassword.getText().toString();//為了加eye button做了修改
 
                 if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)){
 
                     loginUser(email, password);
                 }
+            }
+        });
+
+        //密碼顯示按鈕
+        mBtnPassword = findViewById(R.id.login_button_eye);
+        mBtnPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mbDisplayFlg) {
+                    mEtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    mEtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                mbDisplayFlg = !mbDisplayFlg;
+                mEtPassword.postInvalidate();
             }
         });
     }
@@ -99,7 +119,7 @@ public class Login_Activity extends AppCompatActivity {
 
                 } else {
 
-                    mProgressbar_cycle.setVisibility(View.VISIBLE);
+                    mProgressbar_cycle.setVisibility(View.GONE);
 
                     String task_result = task.getException().getMessage().toString();
 

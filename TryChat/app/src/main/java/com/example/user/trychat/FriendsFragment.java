@@ -38,9 +38,7 @@ public class FriendsFragment extends Fragment {
 
     private DatabaseReference mFriendsDatabase,mFriendskey;
     private DatabaseReference mUsersDatabase;
-
     private FirebaseAuth mAuth;
-
     private String mCurrent_user_id;
 
     private View mMainView;
@@ -62,7 +60,7 @@ public class FriendsFragment extends Fragment {
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
 
         //mFriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Friends").child(mCurrent_user_id);//Part 25 5:00左右打完會有錯
-        mFriendsDatabase=FirebaseDatabase.getInstance().getReference().child("Friends");//改下面這3行
+        mFriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");//改下面這3行
         mFriendskey=mFriendsDatabase.child(mCurrent_user_id);//顯示除了自己以外的好友
 
         //mUsersDatabase.keepSynced(true);//保持同步

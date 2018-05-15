@@ -1,6 +1,8 @@
 package com.example.user.trychat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -50,6 +53,8 @@ public class ChatsFragment extends Fragment {
         // Required empty public constructor
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,9 +62,9 @@ public class ChatsFragment extends Fragment {
         mMainView = inflater.inflate(R.layout.fragment_chats, container, false);
 
         mConvList = mMainView.findViewById(R.id.conv_list);
-        mAuth = FirebaseAuth.getInstance();
 
-        mCurrent_user_id = mAuth.getCurrentUser().getUid();
+        mAuth = FirebaseAuth.getInstance();
+        mCurrent_user_id = mAuth.getCurrentUser().getUid();//目前使用者id
 
         mConvDatabase=FirebaseDatabase.getInstance().getReference().child("Chat");//改下面這3行
         mConvkey=mConvDatabase.child(mCurrent_user_id);//顯示除了自己以外的好友
@@ -147,13 +152,58 @@ public class ChatsFragment extends Fragment {
 
                         convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
+                            public void onClick(View view) {//選擇聊天室
 
+                                //所點擊對象的資料傳到ChatActivity
                                 Intent chatIntent = new Intent(getContext(), ChatActivity.class);
                                 chatIntent.putExtra("from_user_id", list_user_id);
                                 chatIntent.putExtra("user_name", userName);
                                 startActivity(chatIntent);
+                            }
+                        });
 
+                        convViewHolder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                final CharSequence options[] = new CharSequence[]{"Chat", "Delete"};
+
+                                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+                                //builder.setTitle("Select Options");
+                                alert.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        //Click Event for each item.
+                                        if(which == 0){//Go to Chat room
+                                            Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                            chatIntent.putExtra("from_user_id", list_user_id);
+                                            chatIntent.putExtra("user_name", userName);
+                                            startActivity(chatIntent);
+                                        }
+
+                                        if(which == 1) {//Delete chat
+                                            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+                                            alert.setTitle("Deletion confirmation");//警告提醒
+                                            alert.setMessage("Deleted chats can't be recovered. Are you sure want to continue?");
+                                            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    DatabaseReference mDelete_User = FirebaseDatabase.getInstance().getReference().child("message").child(mCurrent_user_id).child(list_user_id);
+                                                    mDelete_User.removeValue();
+                                                }
+                                            });
+                                            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                            alert.show();
+                                        }
+                                    }
+                                });
+                                alert.show();
+                                return false;
                             }
                         });
 

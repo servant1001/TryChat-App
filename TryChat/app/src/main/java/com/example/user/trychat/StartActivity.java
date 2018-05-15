@@ -3,8 +3,11 @@ package com.example.user.trychat;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -17,7 +20,6 @@ public class StartActivity extends AppCompatActivity {
 
         mReg_btn = findViewById(R.id.start_reg_btn);
         Login_btn = findViewById(R.id.start_login_btn);
-
 
         mReg_btn.setOnClickListener(new View.OnClickListener() {
             @Override

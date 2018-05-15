@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
     private static final int GALLERY_PICK = 1;
     private StorageReference mImageStorage; //Storage Firebase
 
-
+    private boolean typingStarted = false;//Typing Listener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +134,7 @@ public class ChatActivity extends AppCompatActivity {
 
         mMessageList.setAdapter(mAdapter);
 
-                //------- IMAGE STORAGE ---------
+        //------- IMAGE STORAGE ---------
         mImageStorage = FirebaseStorage.getInstance().getReference();
         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
 
@@ -215,11 +217,9 @@ public class ChatActivity extends AppCompatActivity {
         mChatAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent galleryIntent = new Intent();
                 galleryIntent.setType("image/*");
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-
                 startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
             }
         });
@@ -228,12 +228,35 @@ public class ChatActivity extends AppCompatActivity {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 mCurrentPage++;
-
                 itemPos = 0;
-
                 loadMoreMessages();
+            }
+        });
+
+        //Typing Listener  待完成
+        mChatMessageView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s.toString()) && s.toString().trim().length() == 1) {
+                    //Log.i(TAG, “typing started event…”);
+                    //typingStarted = true;
+                    //send typing started status
+                } else if (s.toString().trim().length() == 0 && typingStarted) {
+                    //Log.i(TAG, “typing stopped event…”);
+                    //typingStarted = false;
+                    //send typing stopped status
+                }
             }
         });
 
