@@ -234,7 +234,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //Typing Listener  待完成
+        //Typing Listener  待完成 Firebase 還要建一個判斷值 讓對方可以同步看到typing...
         mChatMessageView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -351,17 +351,14 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
             }
-
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -372,7 +369,6 @@ public class ChatActivity extends AppCompatActivity {
     private void loadMessages() {
 
         DatabaseReference messageRef = mRootRef.child("message").child(mCurrentUserId).child(mChatUser);
-
         Query messageQuery = messageRef.limitToLast(mCurrentPage * TOTAL_ITEMS_TO_LOAD);//一次加載10比對話
 
         messageQuery.addChildEventListener(new ChildEventListener() {
@@ -396,22 +392,18 @@ public class ChatActivity extends AppCompatActivity {
 
                 mRefreshLayout.setRefreshing(false);//動畫結束
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
             }
-
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -454,10 +446,8 @@ public class ChatActivity extends AppCompatActivity {
                     if (databaseError != null) {
                         Log.d("CHAT_LOG", databaseError.getMessage().toString());
                     }
-
                 }
             });
-
         }
     }
 }
