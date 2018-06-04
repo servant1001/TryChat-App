@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -48,6 +49,8 @@ public class ChatsFragment extends Fragment {
     private String mCurrent_user_id;
 
     private View mMainView;
+
+    public FirebaseRecyclerAdapter firebaseConvAdapter;
 
     public ChatsFragment() {
         // Required empty public constructor
@@ -97,10 +100,10 @@ public class ChatsFragment extends Fragment {
                         .setQuery(mConvkey, Conv.class)
                         .build();
 
-        FirebaseRecyclerAdapter firebaseConvAdapter = new FirebaseRecyclerAdapter<Conv, ConvViewHolder>(options) {
+        firebaseConvAdapter = new FirebaseRecyclerAdapter<Conv, ConvViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull final ConvViewHolder convViewHolder, int position, @NonNull final Conv conv) {
+            protected void onBindViewHolder(@NonNull final ConvViewHolder convViewHolder, final int position, @NonNull final Conv conv) {
                 final String list_user_id = getRef(position).getKey();
 
                 Query lastMessageQuery = mMessageDatabase.child(list_user_id).limitToLast(1);
@@ -191,7 +194,11 @@ public class ChatsFragment extends Fragment {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     DatabaseReference mDelete_User = FirebaseDatabase.getInstance().getReference().child("message").child(mCurrent_user_id).child(list_user_id);
-                                                    mDelete_User.removeValue();
+                                                    mDelete_User.removeValue();//刪除聊天內容
+                                                    DatabaseReference mDelete_Chat = FirebaseDatabase.getInstance().getReference().child("Chat").child(mCurrent_user_id).child(list_user_id);
+                                                    mDelete_Chat.removeValue();
+                                                    //firebaseConvAdapter.notifyItemRemoved(position);
+                                                    firebaseConvAdapter.getRef(position).removeValue();//從adapter移除 (列表上消失)
                                                 }
                                             });
                                             alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -286,5 +293,6 @@ public class ChatsFragment extends Fragment {
 
 
     }
+
 
 }
