@@ -87,7 +87,7 @@ public class FriendsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final FriendsViewHolder friendsViewHolder, int i, @NonNull final Friends friends) {
 
-                friendsViewHolder.setStatus(friends.getDate());
+
 
                 final String list_user_id = getRef(i).getKey();
 
@@ -96,7 +96,7 @@ public class FriendsFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                          userName = dataSnapshot.child("name").getValue().toString();
-                         userStatus = dataSnapshot.child("status").getValue().toString();
+                         //userStatus = dataSnapshot.child("status").getValue().toString();
                         String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
                         if(dataSnapshot.hasChild("online")) {
@@ -106,6 +106,7 @@ public class FriendsFragment extends Fragment {
 
                         friendsViewHolder.setName(userName);
                         friendsViewHolder.setStatus(userStatus);
+                        //friendsViewHolder.setStatus(friends.getDate());//顯示成為好友日期時間
                         friendsViewHolder.setUserImage(userThumb, getContext());
 
                         //Part 27

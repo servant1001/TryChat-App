@@ -197,7 +197,7 @@ public class ChatsFragment extends Fragment {
                                                     mDelete_User.removeValue();//刪除聊天內容
                                                     DatabaseReference mDelete_Chat = FirebaseDatabase.getInstance().getReference().child("Chat").child(mCurrent_user_id).child(list_user_id);
                                                     mDelete_Chat.removeValue();
-                                                    //firebaseConvAdapter.notifyItemRemoved(position);
+                                                    firebaseConvAdapter.notifyItemRemoved(position);
                                                     firebaseConvAdapter.getRef(position).removeValue();//從adapter移除 (列表上消失)
                                                 }
                                             });

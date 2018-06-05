@@ -22,7 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,6 +35,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private List<Messages> mMessageList;
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
+    private DatabaseReference mMessageIsSeen;
 
     String current_user_id;
     String from_user;
@@ -67,6 +72,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public TextView displayName;
         public ImageView  messageImage;
         public TextView messageTime;
+        public TextView isSeen;
 
         public MessageViewHolder(View view) {
             super(view);
@@ -76,6 +82,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             displayName = view.findViewById(R.id.name_text_layout);
             messageImage = view.findViewById(R.id.message_image_layout);
             messageTime = view.findViewById(R.id.time_text_layout);
+            isSeen = view.findViewById(R.id.message_isSeen);
         }
     }
 
@@ -96,7 +103,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             //View v = layoutInflater.inflate(R.layout.message_single_layout_send,null);
 
         }else {
+            /*mMessageIsSeen = FirebaseDatabase.getInstance().getReference().child("Chat").child(from_user).child(current_user_id);
+            mMessageIsSeen.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String seen = dataSnapshot.child("seen").getValue().toString();
+                    if (seen.equals("true"))
+                        viewHolder.isSeen.setText("Read");
+                }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });*/
             viewHolder.messageText.setBackgroundResource(R.drawable.message_text_background);
             viewHolder.messageText.setTextColor(Color.WHITE);
         }
@@ -124,8 +144,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         if(message_type.equals("text")) {//判斷訊息是文字還是圖片
 
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+            String date = df.format(c.getTime());
+
             viewHolder.messageText.setText(c.getMessage());
+            viewHolder.messageTime.setText(date);
             viewHolder.messageImage.setVisibility(View.INVISIBLE);
+
 
         } else {
 
@@ -140,10 +165,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             //View v = LayoutInflater.from(parent.getContext())
-                    //.inflate(R.layout.message_single_layout ,parent, false);
-        Messages c = mMessageList.get(viewType-1);
-        String sender = c.getFrom();
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(sender);
+                //.inflate(R.layout.message_single_layout ,parent, false);
+        //Messages c = mMessageList.get(viewType-1);
+        //String sender = c.getFrom();
+        //mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(sender);
 
         View v;
         if( viewType == MessageAdapter.OUTGOING ) {//接收訊息 靠左邊

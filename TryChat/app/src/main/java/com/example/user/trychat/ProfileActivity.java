@@ -40,10 +40,13 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference mNotificationDatabase;
     private DatabaseReference mRootRef;
     private FirebaseUser mCurrent_user;
+    private FirebaseAuth mAuth;
 
     private String mCurrent_state;
 
     private ProgressBar mProgressbar_cycle;
+
+    private String mCurrent_user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,10 @@ public class ProfileActivity extends AppCompatActivity {
         mProfileFriendsCount = findViewById(R.id.profile_totalFriends);
         mProfileSendReqBtn = findViewById(R.id.profile_send_reg_btn);
         mDeclineBtn = findViewById(R.id.profile_decline_btn);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mCurrent_user_id = mAuth.getCurrentUser().getUid();
 
 
         mCurrent_state = "not_friends";//初始狀態 not_friends
@@ -305,6 +312,29 @@ public class ProfileActivity extends AppCompatActivity {
                     });
                 }
             }
+        });
+
+        mDeclineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mFriendReqDatabase.child(mCurrent_user_id).child(user_id).removeValue()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    mFriendReqDatabase.child(user_id).child(mCurrent_user_id).removeValue()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()){
+                                                        Toast.makeText(ProfileActivity.this,"Friends request Canceled Successfully",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+                        });}
         });
     }
 }

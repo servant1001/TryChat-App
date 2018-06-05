@@ -52,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
     private Toolbar mChatToolbar;
 
     private DatabaseReference mRootRef;
+    private DatabaseReference mRootRef1;
 
     private TextView mTitleView;
     private TextView mLastSeenView;
@@ -136,7 +137,8 @@ public class ChatActivity extends AppCompatActivity {
 
         //------- IMAGE STORAGE ---------
         mImageStorage = FirebaseStorage.getInstance().getReference();
-        mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
+
+        mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);//顯示為已讀
 
         loadMessages();
 
@@ -173,7 +175,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //Part 28 建立 Chat
+        /*//Part 28 建立 Chat
         mRootRef.child("Chat").child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -204,12 +206,13 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         mChatSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
+                mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
             }
         });
 
@@ -415,6 +418,7 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessage() {
 
         String message = mChatMessageView.getText().toString();
+
 
         if (!TextUtils.isEmpty(message)){
 
