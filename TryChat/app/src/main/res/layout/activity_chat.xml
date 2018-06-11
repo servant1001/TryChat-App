@@ -9,6 +9,20 @@
 
     <include layout="@layout/app_bar_layout" android:id="@+id/chat_app_bar"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_chat_view"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/typing_loading_background"
+        app:lottie_rawRes="@raw/typing_loading"
+        app:lottie_loop="false"
+        android:visibility="gone"
+        />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/message_swipe_layout"
         android:layout_width="match_parent"

@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -88,6 +89,8 @@ public class ChatActivity extends AppCompatActivity {
     private StorageReference mImageStorage; //Storage Firebase
 
     private boolean typingStarted = false;//Typing Listener
+    private LottieAnimationView animationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View action_bar_view = inflater.inflate(R.layout.chat_custom_bar, null);
+        final View action_bar_view = inflater.inflate(R.layout.chat_custom_bar, null);
 
         actionBar.setCustomView(action_bar_view);
 
@@ -134,6 +137,8 @@ public class ChatActivity extends AppCompatActivity {
         mMessageList.setLayoutManager(mLinearLayout);
 
         mMessageList.setAdapter(mAdapter);
+
+        animationView = findViewById(R.id.animation_chat_view);
 
         //------- IMAGE STORAGE ---------
         mImageStorage = FirebaseStorage.getInstance().getReference();
@@ -275,6 +280,12 @@ public class ChatActivity extends AppCompatActivity {
                 if (typingStatus.equals("true")){
                     //待-改成動畫
                     Toast.makeText(ChatActivity.this, "Typing...",Toast.LENGTH_SHORT).show();
+                    animationView.setVisibility(View.VISIBLE);
+                    animationView.playAnimation();
+                    animationView.loop(true);
+                }else{
+                    animationView.pauseAnimation();
+                    animationView.setVisibility(View.GONE);
                 }
             }
 
