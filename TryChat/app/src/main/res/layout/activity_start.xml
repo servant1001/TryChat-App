@@ -7,6 +7,14 @@
     android:background="@color/colorPrimary"
     tools:context=".StartActivity">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:lottie_rawRes="@raw/confetti"
+        app:lottie_loop="false"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

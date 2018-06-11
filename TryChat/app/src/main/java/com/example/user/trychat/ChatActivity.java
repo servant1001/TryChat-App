@@ -139,6 +139,8 @@ public class ChatActivity extends AppCompatActivity {
         mImageStorage = FirebaseStorage.getInstance().getReference();
 
         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);//顯示為已讀
+        mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("typing").setValue(false);//是否正在輸入訊息
+        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("typing").setValue(false);//是否正在輸入訊息
 
         loadMessages();
 
@@ -237,7 +239,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //Typing Listener  待完成 Firebase 還要建一個判斷值 讓對方可以同步看到typing...
+        //Typing Listener  P1  讓對方可以同步看到typing...
         mChatMessageView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -253,13 +255,32 @@ public class ChatActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s.toString()) && s.toString().trim().length() == 1) {
                     //Log.i(TAG, “typing started event…”);
-                    //typingStarted = true;
-                    //send typing started status
+                    typingStarted = true;
+                    mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("typing").setValue(typingStarted);//是否正在輸入訊息
+
                 } else if (s.toString().trim().length() == 0 && typingStarted) {
                     //Log.i(TAG, “typing stopped event…”);
-                    //typingStarted = false;
-                    //send typing stopped status
+                    typingStarted = false;
+                    mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("typing").setValue(typingStarted);//是否正在輸入訊息
+
                 }
+            }
+        });
+
+        //Typing Listener  P2  讓對方可以同步看到typing...
+        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String typingStatus = dataSnapshot.child("typing").getValue().toString();
+                if (typingStatus.equals("true")){
+                    //待-改成動畫
+                    Toast.makeText(ChatActivity.this, "Typing...",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 

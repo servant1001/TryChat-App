@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +42,8 @@ public class Login_Activity extends AppCompatActivity {
 
     private ProgressBar mProgressbar_cycle;
 
+    private LottieAnimationView animationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,8 @@ public class Login_Activity extends AppCompatActivity {
 
         mProgressbar_cycle = findViewById(R.id.progressBar_cyclic);
         mProgressbar_cycle.setVisibility(View.GONE);
+
+        animationView = findViewById(R.id.animation_view);
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -71,9 +76,10 @@ public class Login_Activity extends AppCompatActivity {
                 //String password = mLoginPassword.getEditText().getText().toString();
                 String password = mEtPassword.getText().toString();//為了加eye button做了修改
 
-                if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)){
-
+                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
                     loginUser(email, password);
+                }else{
+                    Toast.makeText(Login_Activity.this, "Please check your format again...", Toast.LENGTH_LONG).show();
                 }
             }
         });

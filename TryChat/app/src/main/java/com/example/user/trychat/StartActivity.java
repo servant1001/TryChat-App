@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 public class StartActivity extends AppCompatActivity {
 
     private Button mReg_btn,Login_btn;
+    private LottieAnimationView animationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,14 @@ public class StartActivity extends AppCompatActivity {
 
         mReg_btn = findViewById(R.id.start_reg_btn);
         Login_btn = findViewById(R.id.start_login_btn);
+        animationView = findViewById(R.id.animation_view);
+
+        animationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animationView.playAnimation();
+            }
+        });
 
         mReg_btn.setOnClickListener(new View.OnClickListener() {
             @Override
