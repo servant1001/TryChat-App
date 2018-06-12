@@ -144,6 +144,7 @@ public class ChatActivity extends AppCompatActivity {
         mImageStorage = FirebaseStorage.getInstance().getReference();
 
         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);//顯示為已讀
+        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("typing").setValue(false);//是否正在輸入訊息
         mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("typing").setValue(false);//是否正在輸入訊息
 
@@ -220,6 +221,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sendMessage();
                 mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
+                mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("typing").setValue(false);
             }
         });
 
@@ -272,20 +274,36 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //Typing Listener  P2  讓對方可以同步看到typing...
-        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
+        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String typingStatus = dataSnapshot.child("typing").getValue().toString();
-                if (typingStatus.equals("true")){
-                    //待-改成動畫
-                    Toast.makeText(ChatActivity.this, "Typing...",Toast.LENGTH_SHORT).show();
-                    animationView.setVisibility(View.VISIBLE);
-                    animationView.playAnimation();
-                    animationView.loop(true);
-                }else{
-                    animationView.pauseAnimation();
-                    animationView.setVisibility(View.GONE);
+                if (dataSnapshot.getValue() != null){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //Typing Listener  P2  讓對方可以同步看到typing...
+        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("typing").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null){
+                    String typingStatus = dataSnapshot.getValue().toString();
+                    if (typingStatus.equals("true")){
+                        animationView.setVisibility(View.VISIBLE);
+                        animationView.bringToFront();
+                        animationView.getBackground().setAlpha(50);
+                        animationView.playAnimation();
+                        animationView.loop(true);
+                    }else{
+                        animationView.pauseAnimation();
+                        animationView.setVisibility(View.GONE);
+                    }
                 }
             }
 
