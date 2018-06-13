@@ -109,8 +109,6 @@ public class UsersActivity extends AppCompatActivity {
         }else{
             Search_clear_friend_btn.setVisibility(View.GONE);
         }*/
-
-
     }
 
     private void SearchFriends(String searchUserName){

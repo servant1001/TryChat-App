@@ -57,6 +57,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:textColor="@color/colorWhite"
+        android:textSize="10sp"
         android:text="5"
         android:visibility="gone"/>
 

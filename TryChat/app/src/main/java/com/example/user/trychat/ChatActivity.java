@@ -554,4 +554,6 @@ public class ChatActivity extends AppCompatActivity {
         super.onPause();
         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(false);
     }
+
+
 }

@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatsFragment extends Fragment {
+public class ChatsFragment extends Fragment{
 
     private RecyclerView mConvList;
 
@@ -59,7 +60,6 @@ public class ChatsFragment extends Fragment {
     public ChatsFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -233,11 +233,6 @@ public class ChatsFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        /*if (dataSnapshot.hasChild("seen")){
-                            mConvDatabase.child(mCurrent_user_id).child(list_user_id).child("seen").setValue(false);
-
-                        }*/
-
                         if(dataSnapshot.hasChild("unRead")) {
                             String unReadCount = dataSnapshot.child("unRead").getValue().toString();
                             convViewHolder.setUserUnReadMessage(unReadCount);
@@ -252,8 +247,6 @@ public class ChatsFragment extends Fragment {
 
                     }
                 });
-
-
             }
 
             @NonNull
@@ -269,6 +262,8 @@ public class ChatsFragment extends Fragment {
         mConvList.setAdapter(firebaseConvAdapter);
         firebaseConvAdapter.startListening();
     }
+
+
 
     public static class ConvViewHolder extends RecyclerView.ViewHolder {
 
