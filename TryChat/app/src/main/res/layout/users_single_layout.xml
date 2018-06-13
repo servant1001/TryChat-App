@@ -36,11 +36,11 @@
 
     <ImageView
         android:id="@+id/user_single_online_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="22dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/user_single_image"
+        android:layout_marginStart="72dp"
         android:visibility="invisible"
         app:srcCompat="@android:drawable/presence_online" />
 
@@ -50,8 +50,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="47dp"
-        android:text="5"/>
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/unread_backdround"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textColor="@color/colorWhite"
+        android:text="5"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

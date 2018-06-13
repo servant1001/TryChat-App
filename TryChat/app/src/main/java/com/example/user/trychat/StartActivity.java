@@ -10,11 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class StartActivity extends AppCompatActivity {
 
     private Button mReg_btn,Login_btn;
     private LottieAnimationView animationView;
+    private SignInButton mGoogle_btn;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,7 @@ public class StartActivity extends AppCompatActivity {
         mReg_btn = findViewById(R.id.start_reg_btn);
         Login_btn = findViewById(R.id.start_login_btn);
         animationView = findViewById(R.id.animation_view);
+        mGoogle_btn = findViewById(R.id.google_btn);
 
         animationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,5 +53,18 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(login_intent);
             }
         });
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
     }
+
+    /*private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }*/
+
+
 }

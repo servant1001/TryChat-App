@@ -2,13 +2,16 @@ package com.example.user.trychat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +78,39 @@ public class UsersActivity extends AppCompatActivity {
                 Search_friend_et.setText("");
             }
         });
+
+        Search_friend_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s.toString())) {
+                    Search_clear_friend_btn.setVisibility(View.VISIBLE);
+                    Drawable d = getResources().getDrawable(R.drawable.search2);
+                    Search_friend_btn.setBackground(d);
+                }else{
+                    Search_clear_friend_btn.setVisibility(View.GONE);
+                    Drawable d = getResources().getDrawable(R.drawable.search);
+                    Search_friend_btn.setBackground(d);
+                }
+            }
+        });
+        /*String mSearch_clear = Search_friend_et.getText().toString();
+        if (!TextUtils.isEmpty(mSearch_clear)){
+            Search_clear_friend_btn.setVisibility(View.VISIBLE);
+        }else{
+            Search_clear_friend_btn.setVisibility(View.GONE);
+        }*/
+
+
     }
 
     private void SearchFriends(String searchUserName){

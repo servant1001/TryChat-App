@@ -145,7 +145,7 @@ public class ChatActivity extends AppCompatActivity {
         mImageStorage = FirebaseStorage.getInstance().getReference();
 
         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);//顯示為已讀
-        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
+        //mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
         mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("typing").setValue(false);//是否正在輸入訊息
         mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("typing").setValue(false);//是否正在輸入訊息
 
@@ -221,7 +221,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendMessage();
-                mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
+                //mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
                 mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
                 mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("typing").setValue(false);
 
@@ -547,5 +547,11 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(false);
     }
 }

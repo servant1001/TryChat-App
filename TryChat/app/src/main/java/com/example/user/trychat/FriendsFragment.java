@@ -206,7 +206,7 @@ public class FriendsFragment extends Fragment {
 
         public void setUnRead(){
             TextView unRead = mView.findViewById(R.id.user_single_unread_count);
-            unRead.setText("");
+            unRead.setVisibility(View.GONE);
         }
 
     }

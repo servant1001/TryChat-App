@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -314,11 +317,13 @@ public class ChatsFragment extends Fragment {
 
         public void setUserUnReadMessage(String unread_count){
             TextView unReadCount = mView.findViewById(R.id.user_single_unread_count);
-            unReadCount.setText(unread_count);
+            if (unread_count.equals("")){
+                unReadCount.setVisibility(View.GONE);
+            }else{
+                unReadCount.setVisibility(View.VISIBLE);
+                unReadCount.setText(unread_count);
+            }
         }
-
-
     }
-
 
 }

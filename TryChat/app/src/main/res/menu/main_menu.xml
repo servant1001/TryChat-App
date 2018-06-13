@@ -7,7 +7,7 @@
         android:title="Account Settings" />
     <item
         android:id="@+id/main_all_btn"
-        android:title="All Users" />
+        android:title="Find Users" />
     <item
         android:id="@+id/main_logout_btn"
         android:title="Log Out" />
