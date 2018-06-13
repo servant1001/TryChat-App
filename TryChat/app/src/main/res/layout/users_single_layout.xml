@@ -44,6 +44,14 @@
         android:visibility="invisible"
         app:srcCompat="@android:drawable/presence_online" />
 
+    <TextView
+        android:id="@+id/user_single_unread_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="47dp"
+        android:text="5"/>
 
 
 </RelativeLayout>

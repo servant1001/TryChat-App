@@ -39,6 +39,7 @@ public class ChatsFragment extends Fragment {
 
     private RecyclerView mConvList;
 
+    private DatabaseReference mRootRef;
     private DatabaseReference mConvDatabase;
     private DatabaseReference mMessageDatabase;
     private DatabaseReference mUsersDatabase;
@@ -66,11 +67,13 @@ public class ChatsFragment extends Fragment {
 
         mConvList = mMainView.findViewById(R.id.conv_list);
 
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+
         mAuth = FirebaseAuth.getInstance();
         mCurrent_user_id = mAuth.getCurrentUser().getUid();//目前使用者id
 
-        mConvDatabase=FirebaseDatabase.getInstance().getReference().child("Chat");//改下面這3行
-        mConvkey=mConvDatabase.child(mCurrent_user_id);//顯示除了自己以外的好友
+        mConvDatabase = FirebaseDatabase.getInstance().getReference().child("Chat");//改下面這3行
+        mConvkey = mConvDatabase.child(mCurrent_user_id);//顯示除了自己以外的好友
 
         mConvDatabase.keepSynced(true);
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -144,6 +147,7 @@ public class ChatsFragment extends Fragment {
                         final String userName = dataSnapshot.child("name").getValue().toString();
                         String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
+
                         if(dataSnapshot.hasChild("online")) {
 
                             String userOnline = dataSnapshot.child("online").getValue().toString();
@@ -189,7 +193,7 @@ public class ChatsFragment extends Fragment {
                                             AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
                                             alert.setTitle("Deletion confirmation");//警告提醒
-                                            alert.setMessage("Deleted chats can't be recovered. Are you sure want to continue?");
+                                            alert.setMessage("Deleted chatsy can't be recovered. Are you sure want to continue?");
                                             alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -221,6 +225,32 @@ public class ChatsFragment extends Fragment {
 
                     }
                 });
+
+                mConvDatabase.child(mCurrent_user_id).child(list_user_id).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        /*if (dataSnapshot.hasChild("seen")){
+                            mConvDatabase.child(mCurrent_user_id).child(list_user_id).child("seen").setValue(false);
+
+                        }*/
+
+                        if(dataSnapshot.hasChild("unRead")) {
+                            String unReadCount = dataSnapshot.child("unRead").getValue().toString();
+                            convViewHolder.setUserUnReadMessage(unReadCount);
+                        }else{
+                            String unReadCount = "";
+                            convViewHolder.setUserUnReadMessage(unReadCount);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
 
             @NonNull
@@ -269,26 +299,22 @@ public class ChatsFragment extends Fragment {
         }
 
         public void setUserImage(String thumb_image, Context ctx){
-
             CircleImageView userImageView = mView.findViewById(R.id.user_single_image);
             Picasso.with(ctx).load(thumb_image).placeholder(R.drawable.default_avatar).into(userImageView);
-
         }
 
         public void setUserOnline(String online_status) {
-
             ImageView userOnlineView = mView.findViewById(R.id.user_single_online_icon);
-
             if(online_status.equals("true")){
-
                 userOnlineView.setVisibility(View.VISIBLE);
-
             } else {
-
                 userOnlineView.setVisibility(View.INVISIBLE);
-
             }
+        }
 
+        public void setUserUnReadMessage(String unread_count){
+            TextView unReadCount = mView.findViewById(R.id.user_single_unread_count);
+            unReadCount.setText(unread_count);
         }
 
 

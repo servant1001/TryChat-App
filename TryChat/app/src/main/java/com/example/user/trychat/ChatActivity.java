@@ -91,6 +91,7 @@ public class ChatActivity extends AppCompatActivity {
     private boolean typingStarted = false;//Typing Listener
     private LottieAnimationView animationView;
 
+    private int unReadCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,7 +222,29 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sendMessage();
                 mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
+                mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
                 mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("typing").setValue(false);
+
+                unReadCount++;
+                mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("unRead").setValue(unReadCount);
+                /*mRootRef.child("Users").child(mChatUser).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String online_status = dataSnapshot.child("online").getValue().toString();
+                        if (online_status.equals("true")){
+                            unReadCount=0;
+                            mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("unRead").setValue("");
+                        }else{
+                            unReadCount++;
+                            mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("unRead").setValue(unReadCount);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });*/
             }
         });
 
@@ -274,11 +297,32 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").addValueEventListener(new ValueEventListener() {
+        mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null){
+                if (dataSnapshot.hasChild("seen")){
+                    String unRead = dataSnapshot.child("seen").getValue().toString();
+                    if (unRead.equals("true")){
+                        mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("unRead").setValue("");
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("seen")){
+                    String unRead = dataSnapshot.child("seen").getValue().toString();
+                    if (unRead.equals("true")){
+                        unReadCount=0;
+                        mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("unRead").setValue("");
+                    }
                 }
             }
 
@@ -297,7 +341,7 @@ public class ChatActivity extends AppCompatActivity {
                     if (typingStatus.equals("true")){
                         animationView.setVisibility(View.VISIBLE);
                         animationView.bringToFront();
-                        animationView.getBackground().setAlpha(50);
+                        animationView.getBackground().setAlpha(80);
                         animationView.playAnimation();
                         animationView.loop(true);
                     }else{

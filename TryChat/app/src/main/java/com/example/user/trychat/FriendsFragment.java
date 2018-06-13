@@ -38,7 +38,9 @@ public class FriendsFragment extends Fragment {
 
     private DatabaseReference mFriendsDatabase,mFriendskey;
     private DatabaseReference mUsersDatabase;
+
     private FirebaseAuth mAuth;
+
     private String mCurrent_user_id;
 
     private View mMainView;
@@ -60,7 +62,7 @@ public class FriendsFragment extends Fragment {
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
 
         //mFriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Friends").child(mCurrent_user_id);//Part 25 5:00左右打完會有錯
-        mFriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");//改下面這3行
+        mFriendsDatabase=FirebaseDatabase.getInstance().getReference().child("Friends");//改下面這3行
         mFriendskey=mFriendsDatabase.child(mCurrent_user_id);//顯示除了自己以外的好友
 
         //mUsersDatabase.keepSynced(true);//保持同步
@@ -87,7 +89,7 @@ public class FriendsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final FriendsViewHolder friendsViewHolder, int i, @NonNull final Friends friends) {
 
-
+                friendsViewHolder.setStatus(friends.getDate());
 
                 final String list_user_id = getRef(i).getKey();
 
@@ -95,8 +97,8 @@ public class FriendsFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                         userName = dataSnapshot.child("name").getValue().toString();
-                         //userStatus = dataSnapshot.child("status").getValue().toString();
+                        userName = dataSnapshot.child("name").getValue().toString();
+                        userStatus = dataSnapshot.child("status").getValue().toString();
                         String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
                         if(dataSnapshot.hasChild("online")) {
@@ -106,7 +108,7 @@ public class FriendsFragment extends Fragment {
 
                         friendsViewHolder.setName(userName);
                         friendsViewHolder.setStatus(userStatus);
-                        //friendsViewHolder.setStatus(friends.getDate());//顯示成為好友日期時間
+                        friendsViewHolder.setUnRead();
                         friendsViewHolder.setUserImage(userThumb, getContext());
 
                         //Part 27
@@ -200,6 +202,11 @@ public class FriendsFragment extends Fragment {
                 userOnlineView.setVisibility(View.INVISIBLE);
             }
 
+        }
+
+        public void setUnRead(){
+            TextView unRead = mView.findViewById(R.id.user_single_unread_count);
+            unRead.setText("");
         }
 
     }
