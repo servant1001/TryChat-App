@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 //import android.widget.Toolbar;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEtPassword,mEtCheckPassword;
     private Button mCreateBtn;
     private Button mBtnPassword,mBtnCheckPassword;
+    private TextView mSignIn;
     private boolean mbDisplayFlg = false;
     private boolean mbDisplayFlg2 = false;
 
@@ -69,7 +71,16 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword = (TextInputLayout)findViewById(R.id.reg_password);
         mEtPassword = findViewById(R.id.et_register_password);
         mEtCheckPassword = findViewById(R.id.et_register_checkpassword);
+        mSignIn = findViewById(R.id.sign_in);
         mCreateBtn = (Button)findViewById(R.id.reg_create_btn);
+
+        mSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent login_intent = new Intent(RegisterActivity.this,Login_Activity.class);
+                startActivity(login_intent);
+            }
+        });
 
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override

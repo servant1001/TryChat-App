@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="262dp"
+        android:layout_marginTop="240dp"
         android:text="Display Name"
         android:textColor="@android:color/white"
         android:textSize="28sp" />
@@ -40,14 +40,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="308dp"
+        android:layout_marginTop="280dp"
         android:text="Hi there, I'm using Try Chat App"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
 
     <Button
+        android:id="@+id/settings_image_btn"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="94dp"
+        android:background="@android:color/white"
+        android:text="Change image"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <Button
         android:id="@+id/settings_status_btn"
-        android:layout_width="162dp"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -57,16 +69,6 @@
         android:textColor="@android:color/white"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/settings_image_btn"
-        android:layout_width="163dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="94dp"
-        android:background="@android:color/white"
-        android:text="Change image"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp" />
+
 
 </RelativeLayout>

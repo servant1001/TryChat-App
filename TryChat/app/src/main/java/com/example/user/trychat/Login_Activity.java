@@ -15,9 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +37,7 @@ public class Login_Activity extends AppCompatActivity {
     private TextInputLayout mLoginPassword;
     private EditText mEtPassword;
     private Button mLogin_btn,mBtnPassword;
+    private TextView mCreateAccount;
     private boolean mbDisplayFlg = false;
 
     private FirebaseAuth mAuth;
@@ -66,7 +69,16 @@ public class Login_Activity extends AppCompatActivity {
         mLoginEmail = findViewById(R.id.login_email);
         mLoginPassword = findViewById(R.id.login_password);
         mEtPassword = findViewById(R.id.et_login_password);
+        mCreateAccount = findViewById(R.id.create_account);
         mLogin_btn = findViewById(R.id.login_btn);
+
+        mCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent reg_intent = new Intent(Login_Activity.this,RegisterActivity.class);
+                startActivity(reg_intent);
+            }
+        });
 
         mLogin_btn.setOnClickListener(new View.OnClickListener() {
             @Override

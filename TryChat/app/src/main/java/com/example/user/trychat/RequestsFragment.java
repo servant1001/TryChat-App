@@ -176,12 +176,13 @@ public class RequestsFragment extends Fragment {
 
                                     if(req_type.equals("received")){//接收方
                                         mCurrent_state = "req_received";
-                                        mAcceptBtn.setText("Accept Friend Request");
+                                        mAcceptBtn.setText("Accept Request");
                                         mDeclineBtn.setVisibility(View.VISIBLE);//顯示拒絕button
+
                                         mDeclineBtn.setEnabled(true);
                                     } else if(req_type.equals("sent")) {//送出方
                                         mCurrent_state = "req_sent";
-                                        mAcceptBtn.setText("Cancel Friend Request");//取消邀請
+                                        mAcceptBtn.setText("Cancel Request");//取消邀請
                                         mDeclineBtn.setVisibility(View.INVISIBLE);
                                         mDeclineBtn.setEnabled(false);
                                     }
@@ -249,7 +250,7 @@ public class RequestsFragment extends Fragment {
                                     } else {
 
                                         mCurrent_state = "req_sent";
-                                        mAcceptBtn.setText("Cancel Friend Request");//原本邀請按鈕改成取消邀請 (按過邀請後變化)
+                                        mAcceptBtn.setText("Cancel Request");//原本邀請按鈕改成取消邀請 (按過邀請後變化)
 
                                     }
                                     mAcceptBtn.setEnabled(true);

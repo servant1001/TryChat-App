@@ -227,24 +227,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 unReadCount++;
                 mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("unRead").setValue(unReadCount);
-                /*mRootRef.child("Users").child(mChatUser).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String online_status = dataSnapshot.child("online").getValue().toString();
-                        if (online_status.equals("true")){
-                            unReadCount=0;
-                            mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("unRead").setValue("");
-                        }else{
-                            unReadCount++;
-                            mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("unRead").setValue(unReadCount);
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });*/
             }
         });
 
@@ -512,7 +495,6 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessage() {
 
         String message = mChatMessageView.getText().toString();
-
 
         if (!TextUtils.isEmpty(message)){
 
