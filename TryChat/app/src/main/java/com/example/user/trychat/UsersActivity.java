@@ -111,6 +111,7 @@ public class UsersActivity extends AppCompatActivity {
         }*/
     }
 
+    //輸入好友名字並從Firebase來搜尋
     private void SearchFriends(String searchUserName){
 
         Query searchPeopleAndFriend = mUsersDatabase.orderByChild("name")

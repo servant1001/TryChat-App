@@ -72,6 +72,7 @@ public class Login_Activity extends AppCompatActivity {
         mCreateAccount = findViewById(R.id.create_account);
         mLogin_btn = findViewById(R.id.login_btn);
 
+        //到創建帳號頁面
         mCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +80,7 @@ public class Login_Activity extends AppCompatActivity {
                 startActivity(reg_intent);
             }
         });
-
+        //登入按鈕
         mLogin_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +89,7 @@ public class Login_Activity extends AppCompatActivity {
                 //String password = mLoginPassword.getEditText().getText().toString();
                 String password = mEtPassword.getText().toString();//為了加eye button做了修改
 
+                //EditText判斷有沒有輸入字元
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
                     loginUser(email, password);
                 }else{
@@ -112,6 +114,7 @@ public class Login_Activity extends AppCompatActivity {
         });
     }
 
+    //上傳Firebase 登入
     private void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
